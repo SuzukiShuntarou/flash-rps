@@ -2,7 +2,10 @@
   "name": "flash-rps",
   "version": "1.0.0",
   "description": "flash-rps",
-  "main": "bin/index.js",
+  "main": "bin/main.js",
+  "bin": {
+    "flash-rps": "bin/main.js"
+  },
   "scripts": {
     "fix": "prettier --write . && eslint --fix .",
     "lint": "prettier --check . && eslint ."
