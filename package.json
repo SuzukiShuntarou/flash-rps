@@ -10,8 +10,16 @@
     "fix": "prettier --write . && eslint --fix .",
     "lint": "prettier --check . && eslint ."
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuzukiShuntarou/flash-rps.git"
+  },
+  "author": "SuzukiShuntarou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SuzukiShuntarou/flash-rps/issues"
+  },
+  "homepage": "https://github.com/SuzukiShuntarou/flash-rps#readme",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "eslint": "^9.17.0",
