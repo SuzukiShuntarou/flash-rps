@@ -33,7 +33,7 @@ class RpsCommandLine {
         return this.focused.value;
       },
     });
-    return (this.level = response.level);
+    return response.level;
   }
 
   async selectRule() {
@@ -47,15 +47,15 @@ class RpsCommandLine {
     return rule[random];
   }
 
-  async selectCpuRps() {
+  async selectCpuRps(level) {
     const rpsJson = await this.#buildCpuRpsJson();
     const random = Math.floor(Math.random() * 10);
 
     let cpuRPS = {};
-    for (let i = 1; i <= this.level; i++) {
+    for (let i = 1; i <= level; i++) {
       cpuRPS[i] = rpsJson[random][i];
       process.stdout.write(`${i}回目 CPU: ${rpsJson[random][i]}`);
-      await this.#wait(10500 / this.level);
+      await this.#wait(10500 / level);
       console.clear();
     }
     return cpuRPS;
@@ -72,9 +72,9 @@ class RpsCommandLine {
     return JSON.parse(rps);
   }
 
-  async selectUserRps() {
+  async selectUserRps(level) {
     let userSelected = {};
-    for (let i = 1; i <= this.level; i++) {
+    for (let i = 1; i <= level; i++) {
       const response = await enquirer.prompt({
         type: "select",
         name: "rps",

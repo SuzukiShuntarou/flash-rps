@@ -8,8 +8,8 @@ class Main {
     const cli = new RpsCommandLine();
     const currentLevel = await cli.selectLevel();
     const currentRule = await cli.selectRule();
-    const cpuRps = await cli.selectCpuRps();
-    const userRps = await cli.selectUserRps();
+    const cpuRps = await cli.selectCpuRps(currentLevel);
+    const userRps = await cli.selectUserRps(currentLevel);
 
     const judge = new RpsJudge(currentLevel, currentRule, cpuRps, userRps);
     judge.showResult();
