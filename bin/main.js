@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import RpsCommandLine from "../src/rpscommandline.js";
-import RpsJudge from "../src/rpsjudge.js";
+import RpsCommandLine from "../src/rpsCommandLine.js";
+import RpsJudge from "../src/rpsJudge.js";
 
 class Main {
   async exec() {
