@@ -68,12 +68,8 @@ class RpsCommandLine {
   async #buildCpuRpsJson() {
     const fileName = fileURLToPath(import.meta.url);
     const dirName = path.dirname(fileName);
-    try {
-      const rps = await fs.readFile(`${dirName}/cpurps.json`, "utf-8");
-      return JSON.parse(rps);
-    } catch (error) {
-      console.error(error.message);
-    }
+    const rps = await fs.readFile(`${dirName}/cpurps.json`, "utf-8");
+    return JSON.parse(rps);
   }
 
   async selectUserRps() {
