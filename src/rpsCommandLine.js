@@ -96,6 +96,61 @@ class RpsCommandLine {
     }
     return userSelections;
   }
+
+  showResult(currentLevel, currentRule, cpuSelections, userSelections) {
+    const results = this.#judgeResults(
+      currentLevel,
+      currentRule,
+      cpuSelections,
+      userSelections,
+    );
+    if (results.includes(false)) {
+      console.log(
+        `失敗！\n今回のルールは${Object.values(currentRule)}手を選ぶこと\nCPUの選んだ手は ${Object.values(cpuSelections)}です。`,
+      );
+    } else {
+      console.log("成功！");
+    }
+  }
+
+  #judgeResults(currentLevel, currentRule, cpuSelections, userSelections) {
+    const results = [];
+
+    for (let i = 0; i < currentLevel; i++) {
+      switch (Object.keys(currentRule)[0]) {
+        case "win":
+          results.push(this.#winRule(userSelections[i], cpuSelections[i]));
+          break;
+        case "lose":
+          results.push(this.#loseRule(userSelections[i], cpuSelections[i]));
+          break;
+        case "draw":
+          results.push(this.#drawRule(userSelections[i], cpuSelections[i]));
+          break;
+      }
+    }
+    return results;
+  }
+
+  #winRule(userSelect, cpuSelect) {
+    return (
+      (userSelect === "グー" && cpuSelect === "チョキ") ||
+      (userSelect === "パー" && cpuSelect === "グー") ||
+      (userSelect === "チョキ" && cpuSelect === "パー")
+    );
+  }
+
+  #loseRule(userSelect, cpuSelect) {
+    return (
+      (userSelect === "グー" && cpuSelect === "パー") ||
+      (userSelect === "パー" && cpuSelect === "チョキ") ||
+      (userSelect === "チョキ" && cpuSelect === "グー")
+    );
+  }
+
+  #drawRule(userSelect, cpuSelect) {
+    return userSelect === cpuSelect;
+  }
 }
 
 export default RpsCommandLine;

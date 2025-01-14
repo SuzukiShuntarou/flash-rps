@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import RpsCommandLine from "../src/rpsCommandLine.js";
-import RpsJudge from "../src/rpsJudge.js";
 
 class Main {
   async exec() {
@@ -11,8 +10,7 @@ class Main {
     const cpuRps = await cli.selectCpuRps(currentLevel);
     const userRps = await cli.selectUserRps(currentLevel);
 
-    const judge = new RpsJudge(currentLevel, currentRule, cpuRps, userRps);
-    judge.showResult();
+    cli.showResult(currentLevel, currentRule, cpuRps, userRps);
   }
 }
 
