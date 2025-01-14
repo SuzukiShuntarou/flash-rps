@@ -75,11 +75,11 @@ class RpsCommandLine {
 
   async selectUserRps(level) {
     let userSelected = {};
-    for (let i = 1; i <= level; i++) {
+    for (let i = 0; i < level; i++) {
       const response = await enquirer.prompt({
         type: "select",
         name: "rps",
-        message: `${i}回目の手を選んでください。`,
+        message: `${i + 1}回目の手を選んでください。`,
         choices: [{ title: "グー" }, { title: "チョキ" }, { title: "パー" }],
       });
       userSelected[i] = response.rps;
