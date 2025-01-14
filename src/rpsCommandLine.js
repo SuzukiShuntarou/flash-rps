@@ -37,14 +37,24 @@ class RpsCommandLine {
   }
 
   async selectRule() {
-    const rule = { 0: "勝つ", 1: "負ける", 2: "同じ" };
+    const displayRules = ["勝つ", "負ける", "同じ"];
     const random = Math.floor(Math.random() * 3);
-    process.stdout.write(`CPUに対して${rule[random]}手を選んでください`);
+    process.stdout.write(
+      `CPUに対して${displayRules[random]}手を選んでください`,
+    );
 
     await this.#wait(2000);
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    return rule[random];
+    const [WIN, LOSE, DRAW] = [0, 1, 2];
+    switch (random) {
+      case WIN:
+        return { win: displayRules[random] };
+      case LOSE:
+        return { lose: displayRules[random] };
+      case DRAW:
+        return { draw: displayRules[random] };
+    }
   }
 
   async selectCpuRps(level) {
