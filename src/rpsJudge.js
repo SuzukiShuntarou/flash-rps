@@ -28,7 +28,7 @@ class RpsJudge {
   }
 
   #judgeRps(selectedRule) {
-    let results = [];
+    const results = [];
 
     for (let i = 0; i < this.currentLevel; i++) {
       if (selectedRule(this.userRps[i], this.cpuRps[i])) {

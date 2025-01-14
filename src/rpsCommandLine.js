@@ -51,14 +51,14 @@ class RpsCommandLine {
     const rpsJson = await this.#buildCpuRpsJson();
     const random = Math.floor(Math.random() * 10);
 
-    let cpuRPS = {};
+    const cpuSelections = [];
     for (let i = 0; i < level; i++) {
-      cpuRPS[i] = rpsJson[random][i];
+      cpuSelections[i] = rpsJson[random][i];
       process.stdout.write(`${i + 1}回目 CPU: ${rpsJson[random][i]}`);
       await this.#wait(10500 / level);
       console.clear();
     }
-    return cpuRPS;
+    return cpuSelections;
   }
 
   async #wait(ms) {
@@ -74,7 +74,7 @@ class RpsCommandLine {
   }
 
   async selectUserRps(level) {
-    let userSelected = {};
+    const userSelections = [];
     for (let i = 0; i < level; i++) {
       const response = await enquirer.prompt({
         type: "select",
@@ -82,9 +82,9 @@ class RpsCommandLine {
         message: `${i + 1}回目の手を選んでください。`,
         choices: [{ title: "グー" }, { title: "チョキ" }, { title: "パー" }],
       });
-      userSelected[i] = response.rps;
+      userSelections[i] = response.rps;
     }
-    return userSelected;
+    return userSelections;
   }
 }
 
