@@ -7,10 +7,10 @@ class Main {
     const cli = new RpsCommandLine();
     const currentLevel = await cli.selectLevel();
     const currentRule = await cli.selectRule();
-    const cpuRps = await cli.selectCpuRps(currentLevel);
-    const userRps = await cli.selectUserRps(currentLevel);
+    const cpuSelections = await cli.selectCpuRps(currentLevel);
+    const userSelections = await cli.selectUserRps(currentLevel);
 
-    cli.showResult(currentLevel, currentRule, cpuRps, userRps);
+    cli.showResult(currentLevel, currentRule, cpuSelections, userSelections);
   }
 }
 
