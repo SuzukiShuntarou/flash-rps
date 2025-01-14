@@ -7,7 +7,7 @@ class RpsJudge {
   }
 
   showResult() {
-    const results = this.#judgeResult();
+    const results = this.#judgeResults();
     if (results.includes(false)) {
       console.log(
         `失敗！\n今回のルールは${this.currentRule}手を選ぶこと\nCPUの選んだ手は ${Object.values(this.cpuRps)}です。`,
@@ -17,7 +17,7 @@ class RpsJudge {
     }
   }
 
-  #judgeResult() {
+  #judgeResults() {
     if (this.currentRule === "勝つ") {
       return this.#judgeRps(this.#winRule);
     } else if (this.currentRule === "負ける") {
