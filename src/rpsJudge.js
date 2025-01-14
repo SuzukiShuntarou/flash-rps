@@ -31,11 +31,8 @@ class RpsJudge {
     const results = [];
 
     for (let i = 0; i < this.currentLevel; i++) {
-      if (selectedRule(this.userRps[i], this.cpuRps[i])) {
-        results.push(true);
-      } else {
-        results.push(false);
-      }
+      const result = selectedRule(this.userRps[i], this.cpuRps[i]);
+      results.push(result);
     }
     return results;
   }
