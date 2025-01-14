@@ -48,13 +48,13 @@ class RpsCommandLine {
   }
 
   async selectCpuRps(level) {
-    const rpsJson = await this.#buildCpuRpsJson();
+    const nestedCpuRps = await this.#buildNestedCpuRps();
     const random = Math.floor(Math.random() * 10);
 
     const cpuSelections = [];
     for (let i = 0; i < level; i++) {
-      cpuSelections[i] = rpsJson[random][i];
-      process.stdout.write(`${i + 1}回目 CPU: ${rpsJson[random][i]}`);
+      cpuSelections[i] = nestedCpuRps[random][i];
+      process.stdout.write(`${i + 1}回目 CPU: ${nestedCpuRps[random][i]}`);
       await this.#wait(10500 / level);
       console.clear();
     }
@@ -65,12 +65,12 @@ class RpsCommandLine {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  async #buildCpuRpsJson() {
+  async #buildNestedCpuRps() {
     const fileName = fileURLToPath(import.meta.url);
     const dirName = path.dirname(fileName);
     const jsonFilePath = path.join(dirName, "../config/cpurps.json");
-    const rps = await fs.readFile(jsonFilePath, "utf-8");
-    return JSON.parse(rps);
+    const nestedRps = await fs.readFile(jsonFilePath, "utf-8");
+    return JSON.parse(nestedRps);
   }
 
   async selectUserRps(level) {
