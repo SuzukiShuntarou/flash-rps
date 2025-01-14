@@ -52,9 +52,9 @@ class RpsCommandLine {
     const random = Math.floor(Math.random() * 10);
 
     let cpuRPS = {};
-    for (let i = 1; i <= level; i++) {
+    for (let i = 0; i < level; i++) {
       cpuRPS[i] = rpsJson[random][i];
-      process.stdout.write(`${i}回目 CPU: ${rpsJson[random][i]}`);
+      process.stdout.write(`${i + 1}回目 CPU: ${rpsJson[random][i]}`);
       await this.#wait(10500 / level);
       console.clear();
     }
@@ -68,7 +68,8 @@ class RpsCommandLine {
   async #buildCpuRpsJson() {
     const fileName = fileURLToPath(import.meta.url);
     const dirName = path.dirname(fileName);
-    const rps = await fs.readFile(`${dirName}/cpurps.json`, "utf-8");
+    const jsonFilePath = path.join(dirName, "../config/cpurps.json");
+    const rps = await fs.readFile(jsonFilePath, "utf-8");
     return JSON.parse(rps);
   }
 
