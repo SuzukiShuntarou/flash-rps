@@ -106,8 +106,17 @@ class RpsCommandLine {
     );
     if (results.includes(false)) {
       console.log(
-        `失敗！\n今回のルールは${Object.values(currentRule)}手を選ぶこと\nCPUの選んだ手は ${Object.values(cpuSelections)}です。`,
+        `失敗！\n今回のルールは${Object.values(currentRule)}手を選ぶことです。`,
       );
+      for (let i = 0; i < currentLevel; i++) {
+        if (results[i]) {
+          console.log(`${i + 1}回目：正解！`);
+        } else {
+          console.log(
+            `${i + 1}回目：不正解！CPUの選んだ手は${cpuSelections[i]}`,
+          );
+        }
+      }
     } else {
       console.log("成功！");
     }
