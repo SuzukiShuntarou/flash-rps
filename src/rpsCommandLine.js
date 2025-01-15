@@ -38,33 +38,33 @@ class RpsCommandLine {
 
   async selectRule() {
     const displayRules = ["勝つ", "負ける", "同じ"];
-    const random = Math.floor(Math.random() * 3);
+    const ruleIndex = Math.floor(Math.random() * 3);
     process.stdout.write(
-      `CPUに対して${displayRules[random]}手を選んでください`,
+      `CPUに対して${displayRules[ruleIndex]}手を選んでください`,
     );
 
     await this.#wait(2000);
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     const [WIN, LOSE, DRAW] = [0, 1, 2];
-    switch (random) {
+    switch (ruleIndex) {
       case WIN:
-        return { win: displayRules[random] };
+        return { win: displayRules[ruleIndex] };
       case LOSE:
-        return { lose: displayRules[random] };
+        return { lose: displayRules[ruleIndex] };
       case DRAW:
-        return { draw: displayRules[random] };
+        return { draw: displayRules[ruleIndex] };
     }
   }
 
   async selectCpuRps(level) {
     const nestedCpuRps = await this.#buildNestedCpuRps();
-    const random = Math.floor(Math.random() * 10);
+    const cpuRpsIndex = Math.floor(Math.random() * 10);
 
     const cpuSelections = [];
     for (let i = 0; i < level; i++) {
-      cpuSelections[i] = nestedCpuRps[random][i];
-      process.stdout.write(`${i + 1}回目 CPU: ${nestedCpuRps[random][i]}`);
+      cpuSelections[i] = nestedCpuRps[cpuRpsIndex][i];
+      process.stdout.write(`${i + 1}回目 CPU: ${nestedCpuRps[cpuRpsIndex][i]}`);
       await this.#wait(10500 / level);
       console.clear();
     }
