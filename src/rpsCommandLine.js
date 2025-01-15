@@ -132,24 +132,24 @@ class RpsCommandLine {
     return results;
   }
 
-  #winRule(userSelect, cpuSelect) {
+  #winRule(userSelection, cpuSelection) {
     return (
-      (userSelect === "グー" && cpuSelect === "チョキ") ||
-      (userSelect === "パー" && cpuSelect === "グー") ||
-      (userSelect === "チョキ" && cpuSelect === "パー")
+      (userSelection === "グー" && cpuSelection === "チョキ") ||
+      (userSelection === "パー" && cpuSelection === "グー") ||
+      (userSelection === "チョキ" && cpuSelection === "パー")
     );
   }
 
-  #loseRule(userSelect, cpuSelect) {
+  #loseRule(userSelection, cpuSelection) {
     return (
-      (userSelect === "グー" && cpuSelect === "パー") ||
-      (userSelect === "パー" && cpuSelect === "チョキ") ||
-      (userSelect === "チョキ" && cpuSelect === "グー")
+      (userSelection === "グー" && cpuSelection === "パー") ||
+      (userSelection === "パー" && cpuSelection === "チョキ") ||
+      (userSelection === "チョキ" && cpuSelection === "グー")
     );
   }
 
-  #drawRule(userSelect, cpuSelect) {
-    return userSelect === cpuSelect;
+  #drawRule(userSelection, cpuSelection) {
+    return userSelection === cpuSelection;
   }
 }
 
