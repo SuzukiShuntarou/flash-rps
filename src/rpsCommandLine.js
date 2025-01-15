@@ -1,6 +1,3 @@
-import fs from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
 import enquirer from "enquirer";
 
 class RpsCommandLine {
@@ -58,29 +55,22 @@ class RpsCommandLine {
   }
 
   async selectCpuRps(level) {
-    const nestedCpuRps = await this.#buildNestedCpuRps();
-    const cpuRpsIndex = Math.floor(Math.random() * 10);
-
-    const cpuSelections = [];
+    const RPS = ["グー", "パー", "チョキ"];
+    const cpuRpsSelections = [];
     for (let i = 0; i < level; i++) {
-      cpuSelections[i] = nestedCpuRps[cpuRpsIndex][i];
-      process.stdout.write(`${i + 1}回目 CPU: ${nestedCpuRps[cpuRpsIndex][i]}`);
+      const rpsIndex = Math.floor(Math.random() * 3);
+      cpuRpsSelections[i] = RPS[rpsIndex];
+    }
+    for (let i = 0; i < level; i++) {
+      process.stdout.write(`${i + 1}回目 CPU: ${cpuRpsSelections[i]}`);
       await this.#wait(10500 / level);
       console.clear();
     }
-    return cpuSelections;
+    return cpuRpsSelections;
   }
 
   async #wait(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  async #buildNestedCpuRps() {
-    const fileName = fileURLToPath(import.meta.url);
-    const dirName = path.dirname(fileName);
-    const jsonFilePath = path.join(dirName, "../config/cpurps.json");
-    const nestedRps = await fs.readFile(jsonFilePath, "utf-8");
-    return JSON.parse(nestedRps);
   }
 
   async selectUserRps(level) {
