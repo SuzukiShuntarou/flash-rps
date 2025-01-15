@@ -1,6 +1,10 @@
 import enquirer from "enquirer";
 
 class RpsCommandLine {
+  static WIN = 0;
+  static LOSE = 1;
+  static DRAW = 2;
+
   async selectLevel() {
     const response = await enquirer.prompt({
       type: "select",
@@ -43,14 +47,13 @@ class RpsCommandLine {
     await this.#wait(2000);
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    const [WIN, LOSE, DRAW] = [0, 1, 2];
     switch (ruleIndex) {
-      case WIN:
-        return { win: displayRules[ruleIndex] };
-      case LOSE:
-        return { lose: displayRules[ruleIndex] };
-      case DRAW:
-        return { draw: displayRules[ruleIndex] };
+      case RpsCommandLine.WIN:
+        return { [RpsCommandLine.WIN]: displayRules[ruleIndex] };
+      case RpsCommandLine.LOSE:
+        return { [RpsCommandLine.LOSE]: displayRules[ruleIndex] };
+      case RpsCommandLine.DRAW:
+        return { [RpsCommandLine.DRAW]: displayRules[ruleIndex] };
     }
   }
 
@@ -117,13 +120,13 @@ class RpsCommandLine {
 
     for (let i = 0; i < currentLevel; i++) {
       switch (Object.keys(currentRule)[0]) {
-        case "win":
+        case RpsCommandLine.WIN.toString():
           results.push(this.#winRule(userSelections[i], cpuSelections[i]));
           break;
-        case "lose":
+        case RpsCommandLine.LOSE.toString():
           results.push(this.#loseRule(userSelections[i], cpuSelections[i]));
           break;
-        case "draw":
+        case RpsCommandLine.DRAW.toString():
           results.push(this.#drawRule(userSelections[i], cpuSelections[i]));
           break;
       }
