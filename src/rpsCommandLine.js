@@ -61,7 +61,7 @@ class RpsCommandLine {
         return { [RpsCommandLine.WIN]: displayRules[ruleIndex] };
       case RpsCommandLine.LOSE:
         return { [RpsCommandLine.LOSE]: displayRules[ruleIndex] };
-      case RpsCommandLine.DRAW:
+      default:
         return { [RpsCommandLine.DRAW]: displayRules[ruleIndex] };
     }
   }
@@ -143,7 +143,7 @@ class RpsCommandLine {
         case RpsCommandLine.LOSE.toString():
           results.push(this.#loseRule(userSelections[i], cpuSelections[i]));
           break;
-        case RpsCommandLine.DRAW.toString():
+        default:
           results.push(this.#drawRule(userSelections[i], cpuSelections[i]));
           break;
       }
