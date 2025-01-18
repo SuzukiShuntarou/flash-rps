@@ -4,6 +4,9 @@ class RpsCommandLine {
   static WIN = 0;
   static LOSE = 1;
   static DRAW = 2;
+  static ROCK = "グー";
+  static PAPER = "パー";
+  static SCISSORS = "チョキ";
 
   async selectLevel() {
     const response = await enquirer.prompt({
@@ -64,7 +67,11 @@ class RpsCommandLine {
   }
 
   async selectCpuRps(questionCount, displayTime) {
-    const RPS = ["グー", "パー", "チョキ"];
+    const RPS = [
+      RpsCommandLine.ROCK,
+      RpsCommandLine.PAPER,
+      RpsCommandLine.SCISSORS,
+    ];
     const cpuRpsSelections = [];
     for (let i = 0; i < questionCount; i++) {
       const rpsIndex = Math.floor(Math.random() * 3);
@@ -89,7 +96,11 @@ class RpsCommandLine {
         type: "select",
         name: "rps",
         message: `${i + 1}回目の手を選んでください。`,
-        choices: [{ title: "グー" }, { title: "チョキ" }, { title: "パー" }],
+        choices: [
+          { title: RpsCommandLine.ROCK },
+          { title: RpsCommandLine.PAPER },
+          { title: RpsCommandLine.SCISSORS },
+        ],
       });
       userSelections[i] = response.rps;
     }
@@ -142,17 +153,23 @@ class RpsCommandLine {
 
   #winRule(userSelection, cpuSelection) {
     return (
-      (userSelection === "グー" && cpuSelection === "チョキ") ||
-      (userSelection === "パー" && cpuSelection === "グー") ||
-      (userSelection === "チョキ" && cpuSelection === "パー")
+      (userSelection === RpsCommandLine.ROCK &&
+        cpuSelection === RpsCommandLine.SCISSORS) ||
+      (userSelection === RpsCommandLine.PAPER &&
+        cpuSelection === RpsCommandLine.ROCK) ||
+      (userSelection === RpsCommandLine.SCISSORS &&
+        cpuSelection === RpsCommandLine.PAPER)
     );
   }
 
   #loseRule(userSelection, cpuSelection) {
     return (
-      (userSelection === "グー" && cpuSelection === "パー") ||
-      (userSelection === "パー" && cpuSelection === "チョキ") ||
-      (userSelection === "チョキ" && cpuSelection === "グー")
+      (userSelection === RpsCommandLine.ROCK &&
+        cpuSelection === RpsCommandLine.PAPER) ||
+      (userSelection === RpsCommandLine.PAPER &&
+        cpuSelection === RpsCommandLine.SCISSORS) ||
+      (userSelection === RpsCommandLine.SCISSORS &&
+        cpuSelection === RpsCommandLine.ROCK)
     );
   }
 
