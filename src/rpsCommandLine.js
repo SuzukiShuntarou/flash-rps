@@ -4,6 +4,7 @@ class RpsCommandLine {
   static WIN = 0;
   static LOSE = 1;
   static DRAW = 2;
+  static DISPLAY_RULES = ["勝つ", "負ける", "同じ"];
   static ROCK = "グー";
   static PAPER = "パー";
   static SCISSORS = "チョキ";
@@ -47,23 +48,15 @@ class RpsCommandLine {
   }
 
   async selectRule() {
-    const displayRules = ["勝つ", "負ける", "同じ"];
     const ruleIndex = Math.floor(Math.random() * 3);
     process.stdout.write(
-      `CPUに対して${displayRules[ruleIndex]}手を選んでください`,
+      `CPUに対して${RpsCommandLine.DISPLAY_RULES[ruleIndex]}手を選んでください`,
     );
 
     await this.#wait(2000);
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    switch (ruleIndex) {
-      case RpsCommandLine.WIN:
-        return { [RpsCommandLine.WIN]: displayRules[ruleIndex] };
-      case RpsCommandLine.LOSE:
-        return { [RpsCommandLine.LOSE]: displayRules[ruleIndex] };
-      default:
-        return { [RpsCommandLine.DRAW]: displayRules[ruleIndex] };
-    }
+    return ruleIndex;
   }
 
   async selectCpuRps(questionCount, displayTime) {
@@ -116,7 +109,7 @@ class RpsCommandLine {
     );
     if (results.includes(false)) {
       console.log(
-        `失敗！\n今回のルールは${Object.values(currentRule)}手を選ぶことです。`,
+        `失敗！\n今回のルールは${RpsCommandLine.DISPLAY_RULES[currentRule]}手を選ぶことです。`,
       );
       for (let i = 0; i < questionCount; i++) {
         if (results[i]) {
@@ -136,11 +129,11 @@ class RpsCommandLine {
     const results = [];
 
     for (let i = 0; i < questionCount; i++) {
-      switch (Object.keys(currentRule)[0]) {
-        case RpsCommandLine.WIN.toString():
+      switch (currentRule) {
+        case RpsCommandLine.WIN:
           results.push(this.#winRule(userSelections[i], cpuSelections[i]));
           break;
-        case RpsCommandLine.LOSE.toString():
+        case RpsCommandLine.LOSE:
           results.push(this.#loseRule(userSelections[i], cpuSelections[i]));
           break;
         default:
