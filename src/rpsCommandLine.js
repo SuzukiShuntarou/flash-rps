@@ -9,6 +9,15 @@ class RpsCommandLine {
   static PAPER = "パー";
   static SCISSORS = "チョキ";
 
+  async startRps() {
+    const { questionCount, displayTime } = await this.selectLevel();
+    const currentRule = await this.selectRule();
+    const cpuSelections = await this.selectCpuRps(questionCount, displayTime);
+    const userSelections = await this.selectUserRps(questionCount);
+
+    this.showResult(questionCount, currentRule, cpuSelections, userSelections);
+  }
+
   async selectLevel() {
     const response = await enquirer.prompt({
       type: "select",
