@@ -13,25 +13,31 @@ class RpsCommandLine {
       choices: [
         {
           title: "Easy",
-          content: "全3問。\n1問当たり3.5秒表示されます。",
-          value: 3,
+          content: "全3問。\n1問当たり4秒表示されます。",
+          questionCount: 3,
+          displayTime: 4000,
         },
         {
           title: "Normal",
-          content: "全5問。\n1問当たり2.1秒表示されます。",
-          value: 5,
+          content: "全5問。\n1問当たり3秒表示されます。",
+          questionCount: 5,
+          displayTime: 3000,
         },
         {
           title: "Hard",
-          content: "全7問。\n1問当たり1.5秒表示されます。",
-          value: 7,
+          content: "全7問。\n1問当たり2秒表示されます。",
+          questionCount: 7,
+          displayTime: 2000,
         },
       ],
       footer() {
         return `\n${this.focused.content}`;
       },
       result() {
-        return this.focused.value;
+        return {
+          questionCount: this.focused.questionCount,
+          displayTime: this.focused.displayTime,
+        };
       },
     });
     return response.level;
@@ -57,16 +63,16 @@ class RpsCommandLine {
     }
   }
 
-  async selectCpuRps(level) {
+  async selectCpuRps(questionCount, displayTime) {
     const RPS = ["グー", "パー", "チョキ"];
     const cpuRpsSelections = [];
-    for (let i = 0; i < level; i++) {
+    for (let i = 0; i < questionCount; i++) {
       const rpsIndex = Math.floor(Math.random() * 3);
       cpuRpsSelections[i] = RPS[rpsIndex];
     }
-    for (let i = 0; i < level; i++) {
+    for (let i = 0; i < questionCount; i++) {
       process.stdout.write(`${i + 1}回目 CPU: ${cpuRpsSelections[i]}`);
-      await this.#wait(10500 / level);
+      await this.#wait(displayTime);
       console.clear();
     }
     return cpuRpsSelections;
@@ -76,9 +82,9 @@ class RpsCommandLine {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  async selectUserRps(level) {
+  async selectUserRps(questionCount) {
     const userSelections = [];
-    for (let i = 0; i < level; i++) {
+    for (let i = 0; i < questionCount; i++) {
       const response = await enquirer.prompt({
         type: "select",
         name: "rps",
@@ -90,9 +96,9 @@ class RpsCommandLine {
     return userSelections;
   }
 
-  showResult(currentLevel, currentRule, cpuSelections, userSelections) {
+  showResult(questionCount, currentRule, cpuSelections, userSelections) {
     const results = this.#judgeResults(
-      currentLevel,
+      questionCount,
       currentRule,
       cpuSelections,
       userSelections,
@@ -101,7 +107,7 @@ class RpsCommandLine {
       console.log(
         `失敗！\n今回のルールは${Object.values(currentRule)}手を選ぶことです。`,
       );
-      for (let i = 0; i < currentLevel; i++) {
+      for (let i = 0; i < questionCount; i++) {
         if (results[i]) {
           console.log(`${i + 1}回目：正解！`);
         } else {
@@ -115,10 +121,10 @@ class RpsCommandLine {
     }
   }
 
-  #judgeResults(currentLevel, currentRule, cpuSelections, userSelections) {
+  #judgeResults(questionCount, currentRule, cpuSelections, userSelections) {
     const results = [];
 
-    for (let i = 0; i < currentLevel; i++) {
+    for (let i = 0; i < questionCount; i++) {
       switch (Object.keys(currentRule)[0]) {
         case RpsCommandLine.WIN.toString():
           results.push(this.#winRule(userSelections[i], cpuSelections[i]));

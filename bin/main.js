@@ -5,12 +5,12 @@ import RpsCommandLine from "../src/rpsCommandLine.js";
 class Main {
   async exec() {
     const cli = new RpsCommandLine();
-    const currentLevel = await cli.selectLevel();
+    const { questionCount, displayTime } = await cli.selectLevel();
     const currentRule = await cli.selectRule();
-    const cpuSelections = await cli.selectCpuRps(currentLevel);
-    const userSelections = await cli.selectUserRps(currentLevel);
+    const cpuSelections = await cli.selectCpuRps(questionCount, displayTime);
+    const userSelections = await cli.selectUserRps(questionCount);
 
-    cli.showResult(currentLevel, currentRule, cpuSelections, userSelections);
+    cli.showResult(questionCount, currentRule, cpuSelections, userSelections);
   }
 }
 
