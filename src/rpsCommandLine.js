@@ -57,6 +57,7 @@ class RpsCommandLine {
   }
 
   async #selectRule() {
+    console.clear();
     const ruleIndex = Math.floor(Math.random() * 3);
     process.stdout.write(
       `CPUに対して${RpsCommandLine.DISPLAY_RULES[ruleIndex]}手を選んでください`,
@@ -80,10 +81,11 @@ class RpsCommandLine {
       cpuRpsSelections[i] = RPS[rpsIndex];
     }
     for (let i = 0; i < questionCount; i++) {
+      console.clear();
       process.stdout.write(`${i + 1}回目 CPU: ${cpuRpsSelections[i]}`);
       await this.#wait(displayTime);
-      console.clear();
     }
+    console.clear();
     return cpuRpsSelections;
   }
 
