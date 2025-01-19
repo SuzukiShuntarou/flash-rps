@@ -10,15 +10,15 @@ class RpsCommandLine {
   static SCISSORS = "チョキ";
 
   async startRps() {
-    const { questionCount, displayTime } = await this.selectLevel();
-    const currentRule = await this.selectRule();
-    const cpuSelections = await this.selectCpuRps(questionCount, displayTime);
-    const userSelections = await this.selectUserRps(questionCount);
+    const { questionCount, displayTime } = await this.#selectLevel();
+    const currentRule = await this.#selectRule();
+    const cpuSelections = await this.#selectCpuRps(questionCount, displayTime);
+    const userSelections = await this.#selectUserRps(questionCount);
 
-    this.showResult(questionCount, currentRule, cpuSelections, userSelections);
+    this.#showResult(questionCount, currentRule, cpuSelections, userSelections);
   }
 
-  async selectLevel() {
+  async #selectLevel() {
     const response = await enquirer.prompt({
       type: "select",
       name: "level",
@@ -56,7 +56,7 @@ class RpsCommandLine {
     return response.level;
   }
 
-  async selectRule() {
+  async #selectRule() {
     const ruleIndex = Math.floor(Math.random() * 3);
     process.stdout.write(
       `CPUに対して${RpsCommandLine.DISPLAY_RULES[ruleIndex]}手を選んでください`,
@@ -68,7 +68,7 @@ class RpsCommandLine {
     return ruleIndex;
   }
 
-  async selectCpuRps(questionCount, displayTime) {
+  async #selectCpuRps(questionCount, displayTime) {
     const RPS = [
       RpsCommandLine.ROCK,
       RpsCommandLine.PAPER,
@@ -91,7 +91,7 @@ class RpsCommandLine {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  async selectUserRps(questionCount) {
+  async #selectUserRps(questionCount) {
     const userSelections = [];
     for (let i = 0; i < questionCount; i++) {
       const response = await enquirer.prompt({
@@ -109,7 +109,7 @@ class RpsCommandLine {
     return userSelections;
   }
 
-  showResult(questionCount, currentRule, cpuSelections, userSelections) {
+  #showResult(questionCount, currentRule, cpuSelections, userSelections) {
     const results = this.#judgeResults(
       questionCount,
       currentRule,
