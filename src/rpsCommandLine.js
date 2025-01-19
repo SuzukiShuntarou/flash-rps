@@ -15,7 +15,7 @@ class RpsCommandLine {
     const cpuSelections = await this.#selectCpuRps(questionCount, displayTime);
     const userSelections = await this.#selectUserRps(questionCount);
 
-    this.#showResult(questionCount, currentRule, cpuSelections, userSelections);
+    this.#showResult(currentRule, cpuSelections, userSelections);
   }
 
   async #selectLevel() {
@@ -110,7 +110,7 @@ class RpsCommandLine {
     return userSelections;
   }
 
-  #showResult(questionCount, currentRule, cpuSelections, userSelections) {
+  #showResult(currentRule, cpuSelections, userSelections) {
     const results = this.#judgeResults(
       currentRule,
       cpuSelections,
@@ -122,15 +122,15 @@ class RpsCommandLine {
       console.log(
         `失敗！\n今回のルールは${RpsCommandLine.DISPLAY_RULES[currentRule]}手を選ぶことです。`,
       );
-      for (let i = 0; i < questionCount; i++) {
-        if (results[i].isCorrect) {
-          console.log(`${i + 1}回目：正解！`);
+      results.forEach((result, index) => {
+        if (result.isCorrect) {
+          console.log(`${index + 1}回目：正解！`);
         } else {
           console.log(
-            `${i + 1}回目：不正解！CPUの選んだ手は${results[i].cpuSelection}`,
+            `${index + 1}回目：不正解！CPUの選んだ手は${result.cpuSelection}`,
           );
         }
-      }
+      });
     } else {
       console.log("成功！");
     }
