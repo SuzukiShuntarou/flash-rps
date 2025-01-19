@@ -112,7 +112,6 @@ class RpsCommandLine {
 
   #showResult(questionCount, currentRule, cpuSelections, userSelections) {
     const results = this.#judgeResults(
-      questionCount,
       currentRule,
       cpuSelections,
       userSelections,
@@ -135,8 +134,7 @@ class RpsCommandLine {
     }
   }
 
-  #judgeResults(questionCount, currentRule, cpuSelections, userSelections) {
-    const results = [];
+  #judgeResults(currentRule, cpuSelections, userSelections) {
     let rule;
     switch (currentRule) {
       case RpsCommandLine.WIN:
@@ -148,10 +146,9 @@ class RpsCommandLine {
       default:
         rule = this.#drawRule;
     }
-    for (let i = 0; i < questionCount; i++) {
-      results.push(rule(userSelections[i], cpuSelections[i]));
-    }
-    return results;
+    return cpuSelections.map((cpuSelection, index) =>
+      rule(userSelections[index], cpuSelection),
+    );
   }
 
   #winRule(userSelection, cpuSelection) {
