@@ -79,8 +79,7 @@ class RpsCommandLine {
     for (let i = 0; i < questionCount; i++) {
       const rpsIndex = Math.floor(Math.random() * 3);
       cpuRpsSelections[i] = RPS[rpsIndex];
-    }
-    for (let i = 0; i < questionCount; i++) {
+
       console.clear();
       process.stdout.write(`${i + 1}回目 CPU: ${cpuRpsSelections[i]}`);
       await this.#wait(displayTime);
