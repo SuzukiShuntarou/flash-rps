@@ -116,16 +116,18 @@ class RpsCommandLine {
       cpuSelections,
       userSelections,
     );
-    if (results.includes(false)) {
+    const isCorrects = results.map((result) => result.isCorrect);
+
+    if (isCorrects.includes(false)) {
       console.log(
         `失敗！\n今回のルールは${RpsCommandLine.DISPLAY_RULES[currentRule]}手を選ぶことです。`,
       );
       for (let i = 0; i < questionCount; i++) {
-        if (results[i]) {
+        if (results[i].isCorrect) {
           console.log(`${i + 1}回目：正解！`);
         } else {
           console.log(
-            `${i + 1}回目：不正解！CPUの選んだ手は${cpuSelections[i]}`,
+            `${i + 1}回目：不正解！CPUの選んだ手は${results[i].cpuSelection}`,
           );
         }
       }
@@ -146,9 +148,10 @@ class RpsCommandLine {
       default:
         rule = this.#drawRule;
     }
-    return cpuSelections.map((cpuSelection, index) =>
-      rule(userSelections[index], cpuSelection),
-    );
+    return cpuSelections.map((cpuSelection, index) => ({
+      isCorrect: rule(userSelections[index], cpuSelection),
+      cpuSelection: cpuSelection,
+    }));
   }
 
   #winRule(userSelection, cpuSelection) {
