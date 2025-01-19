@@ -137,19 +137,19 @@ class RpsCommandLine {
 
   #judgeResults(questionCount, currentRule, cpuSelections, userSelections) {
     const results = [];
-
+    let rule;
+    switch (currentRule) {
+      case RpsCommandLine.WIN:
+        rule = this.#winRule;
+        break;
+      case RpsCommandLine.LOSE:
+        rule = this.#loseRule;
+        break;
+      default:
+        rule = this.#drawRule;
+    }
     for (let i = 0; i < questionCount; i++) {
-      switch (currentRule) {
-        case RpsCommandLine.WIN:
-          results.push(this.#winRule(userSelections[i], cpuSelections[i]));
-          break;
-        case RpsCommandLine.LOSE:
-          results.push(this.#loseRule(userSelections[i], cpuSelections[i]));
-          break;
-        default:
-          results.push(this.#drawRule(userSelections[i], cpuSelections[i]));
-          break;
-      }
+      results.push(rule(userSelections[i], cpuSelections[i]));
     }
     return results;
   }
