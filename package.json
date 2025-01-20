@@ -1,0 +1,34 @@
+{
+  "name": "flash-rps",
+  "version": "1.0.0",
+  "description": "flash-rps",
+  "main": "bin/main.js",
+  "bin": {
+    "flash-rps": "bin/main.js"
+  },
+  "scripts": {
+    "fix": "prettier --write . && eslint --fix .",
+    "lint": "prettier --check . && eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuzukiShuntarou/flash-rps.git"
+  },
+  "author": "SuzukiShuntarou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SuzukiShuntarou/flash-rps/issues"
+  },
+  "homepage": "https://github.com/SuzukiShuntarou/flash-rps#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "global": "^4.4.0",
+    "prettier": "^3.4.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "enquirer": "^2.4.1"
+  }
+}
